@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-
-
-
 int login()
 {
     char senha[10];
@@ -26,7 +21,7 @@ int login()
 
 float venda(float x)
 {
-    float produto;
+    float produto,troco,total = 0;
     printf("Digite um numero negativo para finalizar a compra... \n");
     do
     {
@@ -35,14 +30,22 @@ float venda(float x)
         if(produto >= 0)
         {
             x += produto;
+            total += produto;
         }
     }while(produto >= 0);
+    
+    do
+    {
+        printf("Quanto foi pago? ");
+        scanf("%f",&troco);
+    }while(total > troco);
+    printf("O troco é %.2f \n \n",troco - total);
     return x;
 }
 
 int main()
 {
-    float total,troco;
+    float total;
     int c_vendas,aux;
     
     login();
