@@ -5,6 +5,7 @@
 int login()
 {
     char senha[10];
+    int tentativas = 3;
     do
     {
         printf("Digite a senha: ");
@@ -12,16 +13,23 @@ int login()
         if(strcmp(senha,"senha") != 0)
         {
             system("cls");
-            printf("Senha incorreta! \n \n");
+            tentativas -= 1;
+            printf("Senha incorreta! Voce tem %d tentativas\n \n",tentativas);
         }
         else
         {
             system("cls");
             printf("Iniciando sistema de vendas... \n \n");
         }
-    }while(strcmp(senha,"senha") != 0);
+    }while(strcmp(senha,"senha") != 0 && tentativas > 0);
+
+    if (tentativas == 0)
+    {
+        printf ("Tentativas expiradas! Encerrando sistema...");
+        exit(0);
+    }
     
-    return(0);
+    return 0;
 }
 
 
