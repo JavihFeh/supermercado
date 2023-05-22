@@ -1,16 +1,22 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 int login()
 {
     char senha[10];
-    printf("Digite a senha: ");
     do
     {
+        printf("Digite a senha: ");
         scanf("%s",senha);
         if(strcmp(senha,"senha") != 0)
         {
-            printf("Senha incorreta! Digite novamente... \n \n");
+            system("cls");
+            printf("Senha incorreta! \n \n");
         }
         else
         {
+            system("cls");
             printf("Iniciando sistema de vendas... \n \n");
         }
     }while(strcmp(senha,"senha") != 0);
@@ -22,9 +28,10 @@ int login()
 float venda(float x)
 {
     float produto,troco,total = 0;
-    printf("Digite um numero negativo para finalizar a compra... \n");
+    printf("Para terminar a compra digite -1, para cancelar o pedido digite -2 ou menos... \n");
     do
     {
+        
         printf("Qual valor do produto? ");
         scanf("%f",&produto);
         if(produto >= 0)
@@ -32,31 +39,60 @@ float venda(float x)
             x += produto;
             total += produto;
         }
+        system("cls");
+        printf("Total da compra: %.2f \n",total);
     }while(produto >= 0);
-    
-    do
+
+    if(produto == -1)
     {
-        printf("Quanto foi pago? ");
-        scanf("%f",&troco);
-    }while(total > troco);
-    printf("O troco é %.2f \n \n",troco - total);
+        do
+        {
+            printf("Quanto foi pago? ");
+            scanf("%f",&troco);
+
+            if(total > troco)
+            {
+                system("cls");
+                printf("Total da compra: %.2f \n",total);
+                printf("Valor insuficiente! \n \n");
+            }
+        }while(total > troco);
+        system("cls");
+        printf("O troco e %.2f \n \n",troco - total);
+    }
+    else
+    {
+        system("cls");
+        printf("Compra cancelada! \n \n");
+        x -= total;
+    }
+
     return x;
+    
 }
 
 int main()
 {
-    float total;
-    int c_vendas,aux;
+    float total = 0, v_total;
+    int c_vendas = 0, c_cancel = 0, aux;
     
     login();
     
     volta:
-    printf("1 - Registrar nova venda \n2 - Encerrar programa \n \n");
+    printf("1 - Registrar nova venda \n2 - Fechar o caixa \n \n");
     scanf("%d",&aux);
     if(aux == 1)
     {
+        v_total = total;
         total = venda(total);
-        c_vendas +=1;
+        if(v_total < total)
+        {
+            c_vendas += 1;
+        }
+        else
+        {
+            c_cancel += 1;
+        }
         goto volta;
     }
     else
@@ -70,7 +106,7 @@ int main()
             goto volta;
         }
     fim:
-    printf("Valor total em vendas: %.2f, numero de vendas: %d",total,c_vendas);
+    printf("Valor total em vendas: %.2f \nNumero de vendas: %d \nCompras canceladas: %d",total,c_vendas,c_cancel);
     return 0;
     
 }
