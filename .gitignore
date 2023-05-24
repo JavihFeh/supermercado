@@ -3,3 +3,5 @@
 .vscode/launch.json
 .vscode/settings.json
 output/main.exe
+main.exe
+.vscode/tasks.json
